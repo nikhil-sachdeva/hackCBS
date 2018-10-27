@@ -1,24 +1,19 @@
 package com.example.nikhil.bolt;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Post {
-    String Location;
+
     String caption;
     double longitude,latitude;
-    Bitmap img;
+    String imgURI;
 
 
-    public String getLocation() {
-        return Location;
-    }
 
-    public void setLocation(String location) {
-        Location = location;
-    }
 
     public String getCaption() {
         return caption;
@@ -30,13 +25,7 @@ public class Post {
 
 
 
-    public Bitmap getImg() {
-        return img;
-    }
 
-    public void setImg(Bitmap img) {
-        this.img = img;
-    }
 
     public double getLongitude() {
         return longitude;
@@ -55,12 +44,22 @@ public class Post {
     }
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("location", Location);
+
         result.put("latitude", latitude);
         result.put("longitude", longitude);
         result.put("caption", caption);
-
+        result.put("imgURI",imgURI);
 
         return result;
     }
+
+    public String getImgURI() {
+        return imgURI;
+    }
+
+    public void setImgURI(String imgURI) {
+        this.imgURI = imgURI;
+    }
+
+
 }

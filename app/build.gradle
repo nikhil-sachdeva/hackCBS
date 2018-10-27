@@ -30,10 +30,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.libizo:customedittext:1.0.3'
-    compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
+    implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
     implementation 'com.google.firebase:firebase-storage:16.0.3'
     implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

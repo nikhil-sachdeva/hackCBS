@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
@@ -26,8 +27,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -55,13 +59,14 @@ public class CreatePost extends AppCompatActivity {
     ImageView add;
     int n=10000;
     Bitmap bm;
-
+    FirebaseStorage storage;
+    StorageReference storageRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        final StorageReference storageRef = storage.getReference();
+   storage = FirebaseStorage.getInstance();
+
         caption = findViewById(R.id.caption);
         add = findViewById(R.id.add);
         l1 = findViewById(R.id.l1);
@@ -104,7 +109,6 @@ public class CreatePost extends AppCompatActivity {
                                     Geocoder gcd = new Geocoder(getApplicationContext(), Locale.getDefault());
                                     try {
                                         name = gcd.getFromLocation(lat, lang, 1).get(0).getLocality();
-                                        post.setLocation(name);
                                         Toast.makeText(CreatePost.this, ""+name+lang+lat, Toast.LENGTH_SHORT).show();
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -122,38 +126,22 @@ public class CreatePost extends AppCompatActivity {
                 Map<String, Object> childUpdates = new HashMap<>();
                 Random generator = new Random();
                 n = generator.nextInt(n);
+                post.setCaption(caption.getText().toString());
                 childUpdates.put("/posts/" + n, post.toMap());
                 myRef.updateChildren(childUpdates);
-                post.setCaption(caption.getText().toString());
 
 
 
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] data = baos.toByteArray();
-
-                UploadTask uploadTask = storageRef.putBytes(data);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(CreatePost.this, "success", Toast.LENGTH_SHORT).show();
-                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                        // ...
-                    }
-                });
 
 
 
 
                 Toast.makeText(CreatePost.this, ""+post.toMap().toString(), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CreatePost.this,MainActivity.class));
 
             }
         });
+
     }
 
     @Override

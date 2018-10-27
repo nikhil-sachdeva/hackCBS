@@ -16,6 +16,9 @@ public class DangerPredictionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.danger_fragment,container,false);
        // Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+
+
+
         return view;
     }
 

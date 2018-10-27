@@ -42,7 +42,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="130dp"
         android:layout_marginEnd="34dp"
         app:srcCompat="@drawable/stat_icon" />
 
