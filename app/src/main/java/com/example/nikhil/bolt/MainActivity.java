@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.bottom_post:
                         fragment = new PostFragment();
                         loadFragment(fragment);
+                    case R.id.bottom_driving:
+                        fragment=new DriverSettingsFragment();
+                        loadFragment(fragment);
                         return true;    
                 }
 

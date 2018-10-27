@@ -1,10 +1,14 @@
 package com.example.nikhil.bolt;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,15 +20,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class DangerPredictionFragment extends Fragment {
 
+    private static final String TAG = "afadf";
     AccidentDatabaseHelper dbHelper;
     Location myLocation;
     LocationAdapter adapter;
@@ -32,51 +42,79 @@ public class DangerPredictionFragment extends Fragment {
     TextView indexView;
     TextView constituencyLabel;
     TextView constituencyIdx;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     @Nullable
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.danger_fragment,container,false);
-       // Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+        View view = inflater.inflate(R.layout.danger_fragment, container, false);
+        // Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
 
         recyclerView = view.findViewById(R.id.recycler);
         indexView = view.findViewById(R.id.index);
         constituencyLabel = view.findViewById(R.id.label);
         constituencyIdx = view.findViewById(R.id.label_index);
 
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
         dbHelper = new AccidentDatabaseHelper(getContext());
         myLocation = new Location("");
-        myLocation.setLatitude(28.6129);
-        myLocation.setLongitude(77.2273);
 
-        try {
-            getDatabase();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.i("Messages", "IOException in main()");
-            Log.i("Messages", e.toString());
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
         }
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            double lat = location.getLatitude();
+                            double lang = location.getLongitude();
+                            myLocation.setLatitude(lat);
+                            myLocation.setLongitude(lang);
+                            Log.d(TAG, "onSuccess: "+lang+","+lat);
+                            try {
+                                getDatabase();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                Log.i("Messages", "IOException in main()");
+                                Log.i("Messages", e.toString());
+                            }
 
-        ArrayList<LocationData> list = getClosest();
-        String zone = list.get(0).getZone();
-        int count = dbHelper.getZonewiseCount(zone);
-        float odds = (float) count/(145-count);
-        double index = average(list)*odds*10;
-        double zoneIndex = dbHelper.getZoneIndex(zone);
-        Log.i("Messages", "Zone index: "+zone+ "::"+dbHelper.getZoneIndex(zone));
+                            ArrayList<LocationData> list = getClosest();
+                            String zone = list.get(0).getZone();
+                            int count = dbHelper.getZonewiseCount(zone);
+                            float odds = (float) count/(145-count);
+                            double index = average(list)*odds*10;
+                            double zoneIndex = dbHelper.getZoneIndex(zone);
+                            Log.i("Messages", "Zone index: "+zone+ "::"+dbHelper.getZoneIndex(zone));
 
-        Log.i("Messages", "Particular zone index: "+"Count: "+count+": "+ average(list)*odds);
-        dbHelper.dropTable();
+                            Log.i("Messages", "Particular zone index: "+"Count: "+count+": "+ average(list)*odds);
+                            dbHelper.dropTable();
 
-        indexView.setText(new DecimalFormat("##.##").format(index)+"");
-        constituencyLabel.setText(getConstituency(list.get(0).getZone())+": ");
-        constituencyIdx.setText(new DecimalFormat("##.##").format(zoneIndex)+"");
+                            indexView.setText(new DecimalFormat("##.##").format(index)+"");
+                            constituencyLabel.setText(getConstituency(list.get(0).getZone())+": ");
+                            constituencyIdx.setText(new DecimalFormat("##.##").format(zoneIndex)+"");
 
-        adapter = new LocationAdapter(list, getContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            adapter = new LocationAdapter(list, getContext());
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
+                        }
+
+                    }
+                });
+        Log.d(TAG, "onCreateView: "+myLocation.getLatitude()+myLocation.getLongitude());
+//myLocation.setLatitude(28.7327711);
+//myLocation.setLongitude(77.1188928);
 
         return view;
     }
