@@ -4,17 +4,19 @@
     tools:context="com.example.nikhil.bolt.MainActivity">
     <item
         android:id="@+id/bottom_post"
-        android:icon="@drawable/add"
+        android:icon="@drawable/posts"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Posts"
         app:showAsAction="never" />
     <item
         android:id="@+id/bottom_danger"
+        android:icon="@drawable/ic_error_black_24dp"
         android:orderInCategory="100"
         android:title="My Safety Index"
         app:showAsAction="never" />
     <item
         android:id="@+id/bottom_driving"
+        android:icon="@drawable/car"
         android:orderInCategory="100"
         android:title="Driving Settings"
         app:showAsAction="never" />
