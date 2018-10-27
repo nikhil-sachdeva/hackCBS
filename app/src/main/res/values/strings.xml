@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Bolt</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="location_options">
+        <item>Get Current Location</item>
+        <item>Select a Location</item>
+    </string-array>
+</resources>
