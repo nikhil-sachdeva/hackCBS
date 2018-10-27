@@ -35,7 +35,16 @@
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         app:menu="@menu/bottom_menu" />
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="120dp"
+        android:layout_marginEnd="34dp"
+        app:srcCompat="@drawable/stat_icon" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

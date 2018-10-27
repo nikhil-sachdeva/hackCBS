@@ -31,7 +31,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 2;
     PostFragment postFragment;
-
+    FloatingActionButton fab_stats;
     PagerAdapter pagerAdapter;
     ViewPager viewPager;
     BottomNavigationView navigation;
@@ -51,8 +51,15 @@ public class MainActivity extends AppCompatActivity {
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        fab_stats=findViewById(R.id.fab_stats);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.rsz_b);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab_stats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,StatisticsActivity.class));
+            }
+        });
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

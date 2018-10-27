@@ -26,11 +26,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.libizo.CustomEditText;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,11 +54,14 @@ public class CreatePost extends AppCompatActivity {
     LinearLayout l1, l2;
     ImageView add;
     int n=10000;
+    Bitmap bm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageRef = storage.getReference();
         caption = findViewById(R.id.caption);
         add = findViewById(R.id.add);
         l1 = findViewById(R.id.l1);
@@ -117,6 +125,31 @@ public class CreatePost extends AppCompatActivity {
                 childUpdates.put("/posts/" + n, post.toMap());
                 myRef.updateChildren(childUpdates);
                 post.setCaption(caption.getText().toString());
+
+
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] data = baos.toByteArray();
+
+                UploadTask uploadTask = storageRef.putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(CreatePost.this, "success", Toast.LENGTH_SHORT).show();
+                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                        // ...
+                    }
+                });
+
+
+
+
                 Toast.makeText(CreatePost.this, ""+post.toMap().toString(), Toast.LENGTH_SHORT).show();
 
             }
@@ -131,7 +164,7 @@ public class CreatePost extends AppCompatActivity {
                 Log.d("s", "onActivityResult: worked");
                 Uri imageUri = data.getData();
                 InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                Bitmap bm = BitmapFactory.decodeStream(imageStream);
+                 bm = BitmapFactory.decodeStream(imageStream);
                 add.setImageBitmap(bm);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
