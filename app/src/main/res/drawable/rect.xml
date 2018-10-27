@@ -13,6 +13,6 @@
         android:top="10dp"
         android:right="10dp"
         android:bottom="10dp" />
-    <solid android:color="#9FA8DA" />
+    <solid android:color="#ffffff" />
     <stroke android:width="2dip" android:color="#283593" />
 </shape>
