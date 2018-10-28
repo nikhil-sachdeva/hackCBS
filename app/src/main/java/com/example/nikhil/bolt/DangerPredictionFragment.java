@@ -1,10 +1,13 @@
 package com.example.nikhil.bolt;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +29,15 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
 
 public class DangerPredictionFragment extends Fragment {
 
@@ -42,7 +49,9 @@ public class DangerPredictionFragment extends Fragment {
     TextView indexView;
     TextView constituencyLabel;
     TextView constituencyIdx;
+    ImageView currentLocation, otherLocation;
     private FusedLocationProviderClient mFusedLocationClient;
+    private static final int AUTOCOMPLETE_LOCATION_ACTIVITY_REQUEST_CODE = 102;
 
     @Nullable
 
@@ -55,66 +64,83 @@ public class DangerPredictionFragment extends Fragment {
         indexView = view.findViewById(R.id.index);
         constituencyLabel = view.findViewById(R.id.label);
         constituencyIdx = view.findViewById(R.id.label_index);
+        currentLocation = view.findViewById(R.id.current_location);
+        otherLocation = view.findViewById(R.id.autocomplete_location);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
         dbHelper = new AccidentDatabaseHelper(getContext());
         myLocation = new Location("");
 
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        currentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        }
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            double lat = location.getLatitude();
-                            double lang = location.getLongitude();
-                            myLocation.setLatitude(lat);
-                            myLocation.setLongitude(lang);
-                            Log.d(TAG, "onSuccess: "+lang+","+lat);
-                            try {
-                                getDatabase();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                Log.i("Messages", "IOException in main()");
-                                Log.i("Messages", e.toString());
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+
+                }
+                mFusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                if (location != null) {
+                                    double lat = location.getLatitude();
+                                    double lang = location.getLongitude();
+                                    myLocation.setLatitude(lat);
+                                    myLocation.setLongitude(lang);
+                                    Log.d(TAG, "onSuccess: "+lang+","+lat);
+                                    try {
+                                        getDatabase();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                        Log.i("Messages", "IOException in main()");
+                                        Log.i("Messages", e.toString());
+                                    }
+
+                                    ArrayList<LocationData> list = getClosest();
+                                    String zone = list.get(0).getZone();
+                                    int count = dbHelper.getZonewiseCount(zone);
+                                    float odds = (float) count/(145-count);
+                                    double index = average(list)*odds*10;
+                                    double zoneIndex = dbHelper.getZoneIndex(zone);
+                                    Log.i("Messages", "Zone index: "+zone+ "::"+dbHelper.getZoneIndex(zone));
+
+                                    Log.i("Messages", "Particular zone index: "+"Count: "+count+": "+ average(list)*odds);
+                                    dbHelper.dropTable();
+
+                                    indexView.setText(new DecimalFormat("##.##").format(index)+"");
+                                    constituencyLabel.setText(getConstituency(list.get(0).getZone())+": ");
+                                    constituencyIdx.setText(new DecimalFormat("##.##").format(zoneIndex)+"");
+
+                                    adapter = new LocationAdapter(list, getContext());
+                                    recyclerView.setAdapter(adapter);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+                                }
+
                             }
+                        });
 
-                            ArrayList<LocationData> list = getClosest();
-                            String zone = list.get(0).getZone();
-                            int count = dbHelper.getZonewiseCount(zone);
-                            float odds = (float) count/(145-count);
-                            double index = average(list)*odds*10;
-                            double zoneIndex = dbHelper.getZoneIndex(zone);
-                            Log.i("Messages", "Zone index: "+zone+ "::"+dbHelper.getZoneIndex(zone));
+            }
+        });
 
-                            Log.i("Messages", "Particular zone index: "+"Count: "+count+": "+ average(list)*odds);
-                            dbHelper.dropTable();
-
-                            indexView.setText(new DecimalFormat("##.##").format(index)+"");
-                            constituencyLabel.setText(getConstituency(list.get(0).getZone())+": ");
-                            constituencyIdx.setText(new DecimalFormat("##.##").format(zoneIndex)+"");
-
-                            adapter = new LocationAdapter(list, getContext());
-                            recyclerView.setAdapter(adapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        otherLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PlaceAutocompleteActivity.class);
+                startActivityForResult(intent, AUTOCOMPLETE_LOCATION_ACTIVITY_REQUEST_CODE);
+            }
+        });
 
 
-                        }
-
-                    }
-                });
         Log.d(TAG, "onCreateView: "+myLocation.getLatitude()+myLocation.getLongitude());
-//myLocation.setLatitude(28.7327711);
-//myLocation.setLongitude(77.1188928);
 
         return view;
     }
@@ -201,6 +227,49 @@ public class DangerPredictionFragment extends Fragment {
             case "west": return "WEST DELHI";
             case "chandnichowk": return "CHANDNI CHOWK";
             default: return "Unknown Constituency";
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AUTOCOMPLETE_LOCATION_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Bundle intentBundle = data.getBundleExtra("LOCATION_BUNDLE");
+                double lat = intentBundle.getDouble("LATITUDE");
+                double lang = intentBundle.getDouble("LONGITUDE");
+                myLocation.setLatitude(lat);
+                myLocation.setLongitude(lang);
+                Log.d(TAG, "onSuccess: "+lang+","+lat);
+                try {
+                    getDatabase();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.i("Messages", "IOException in main()");
+                    Log.i("Messages", e.toString());
+                }
+
+                ArrayList<LocationData> list = getClosest();
+                String zone = list.get(0).getZone();
+                int count = dbHelper.getZonewiseCount(zone);
+                float odds = (float) count/(145-count);
+                double index = average(list)*odds*10;
+                double zoneIndex = dbHelper.getZoneIndex(zone);
+                Log.i("Messages", "Zone index: "+zone+ "::"+dbHelper.getZoneIndex(zone));
+
+                Log.i("Messages", "Particular zone index: "+"Count: "+count+": "+ average(list)*odds);
+                dbHelper.dropTable();
+
+                indexView.setText(new DecimalFormat("##.##").format(index)+"");
+                constituencyLabel.setText(getConstituency(list.get(0).getZone())+": ");
+                constituencyIdx.setText(new DecimalFormat("##.##").format(zoneIndex)+"");
+
+                adapter = new LocationAdapter(list, getContext());
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            }
         }
     }
 

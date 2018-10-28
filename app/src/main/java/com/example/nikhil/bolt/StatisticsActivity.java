@@ -16,7 +16,7 @@ import me.ithebk.barchart.BarChartModel;
 
 public class StatisticsActivity extends AppCompatActivity {
 FloatingActionButton predict;
-    BarChartModel barChartModel11,barChartModel12,barChartModel9_2,barChartModel10_2;
+    BarChartModel barChartModel11,barChartModel12,barChartModel9_2,barChartModel10_2,barChartModel9_3,barChartModel10_3,barChartModel9_4,barChartModel10_4;
     BarChart barChart1,barChart2,barChart3,barChart4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,10 @@ FloatingActionButton predict;
         barChart1.setBarMaxValue(700000);
         barChart2=findViewById(R.id.bar_chart2);
         barChart2.setBarMaxValue(2200);
+        barChart3=findViewById(R.id.bar_chart3);
+        barChart3.setBarMaxValue(2200);
+        barChart4=findViewById(R.id.bar_chart4);
+        barChart4.setBarMaxValue(9000);
         predict=findViewById(R.id.predict);
         final BarChartModel barChartModel3=getModel(486112,"#452312","2010");
         BarChartModel barChartModel4=getModel(512988,"#452312","2011");
@@ -50,10 +54,28 @@ FloatingActionButton predict;
         barChartModel9_2=getModel(1682,"#123456","2018");
         barChartModel10_2=getModel(1951,"#123456","2018");
 
+        final BarChartModel barChartModel1_3=getModel(2153,"#452312","2010");
+        BarChartModel barChartModel2_3=getModel(2110,"#452312","2011");
+        BarChartModel barChartModel3_3=getModel(1866,"#452312","2012");
+        BarChartModel barChartModel4_3=getModel(1820,"#452312","2013");
+        BarChartModel barChartModel5_3=getModel(1671,"#452312","2014");
+        BarChartModel barChartModel6_3=getModel(1622,"#452312","2015");
+        BarChartModel barChartModel7_3=getModel(1591,"#452312","2016");
+        BarChartModel barChartModel8_3=getModel(1584,"#452312","2017");
+        barChartModel9_3=getModel(1789,"#123456","2018");
+        barChartModel10_3=getModel(2101,"#123456","2018");
 
 
-
-
+        final BarChartModel barChartModel1_4=getModel(7260,"#452312","2010");
+        BarChartModel barChartModel2_4=getModel(7280,"#452312","2011");
+        BarChartModel barChartModel3_4=getModel(6937,"#452312","2012");
+        BarChartModel barChartModel4_4=getModel(7566,"#452312","2013");
+        BarChartModel barChartModel5_4=getModel(8623,"#452312","2014");
+        BarChartModel barChartModel6_4=getModel(8085,"#452312","2015");
+        BarChartModel barChartModel7_4=getModel(7375,"#452312","2016");
+        BarChartModel barChartModel8_4=getModel(6673,"#452312","2017");
+        barChartModel9_4=getModel(4741,"#123456","2018");
+        barChartModel10_4=getModel(1925,"#123456","2018");
 
 
 
@@ -79,6 +101,27 @@ FloatingActionButton predict;
         barChart2.addBar(barChartModel8_2);
 
 
+        barChart3.addBar(barChartModel1_3);
+        barChart3.addBar(barChartModel2_3);
+        barChart3.addBar(barChartModel3_3);
+        barChart3.addBar(barChartModel4_3);
+        barChart3.addBar(barChartModel5_3);
+        barChart3.addBar(barChartModel6_3);
+        barChart3.addBar(barChartModel7_3);
+        barChart3.addBar(barChartModel8_3);
+
+
+
+        barChart4.addBar(barChartModel1_4);
+        barChart4.addBar(barChartModel2_4);
+        barChart4.addBar(barChartModel3_4);
+        barChart4.addBar(barChartModel4_4);
+        barChart4.addBar(barChartModel5_4);
+        barChart4.addBar(barChartModel6_4);
+        barChart4.addBar(barChartModel7_4);
+        barChart4.addBar(barChartModel8_4);
+
+
         predict.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +130,12 @@ FloatingActionButton predict;
 
                 barChart2.addBar(barChartModel9_2);
                 barChart2.addBar(barChartModel10_2);
+
+                barChart3.addBar(barChartModel9_3);
+                barChart3.addBar(barChartModel10_3);
+
+                barChart4.addBar(barChartModel9_4);
+                barChart4.addBar(barChartModel10_4);
 
             }
         });

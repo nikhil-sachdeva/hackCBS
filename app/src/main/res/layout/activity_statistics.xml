@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:barchart="http://schemas.android.com/apk/res-auto">
 
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:barchart="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <me.ithebk.barchart.BarChart
         android:id="@+id/bar_chart1"
         barchart:bar_type="vertical"
@@ -18,7 +27,11 @@
         barchart:bar_show_animation="true"
         android:layout_width="wrap_content"
         android:layout_height="250dp"/>
-
+<TextView
+    android:textSize="20sp"
+    android:text="1. No of vehicles in Delhi"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
     <me.ithebk.barchart.BarChart
         android:id="@+id/bar_chart2"
         barchart:bar_type="vertical"
@@ -32,11 +45,16 @@
         barchart:bar_show_value="true"
         barchart:bar_show_animation="true"
         android:layout_width="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="30dp"
         android:layout_height="250dp"/>
-
+    <TextView
+        android:textSize="20sp"
+        android:text="2. Fatal accidents in Delhi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <me.ithebk.barchart.BarChart
         android:id="@+id/bar_chart3"
+        android:layout_below="@+id/bar_chart2"
         barchart:bar_type="vertical"
         barchart:bar_width="33dp"
         barchart:bar_color="@color/colorPrimary"
@@ -48,16 +66,44 @@
         barchart:bar_show_value="true"
         barchart:bar_show_animation="true"
         android:layout_width="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="50dp"
         android:layout_height="250dp"/>
+    <TextView
+        android:textSize="20sp"
+        android:text="3. Persons killed in road accidents in Delhi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <me.ithebk.barchart.BarChart
+        android:id="@+id/bar_chart4"
+        barchart:bar_type="vertical"
+        barchart:bar_width="33dp"
+        barchart:bar_color="@color/colorPrimary"
+        barchart:bar_text_color="#808080"
+        barchart:bar_text_size="10sp"
+        barchart:bar_show_auto_color="false"
+        barchart:bar_max_value="100"
+        barchart:bar_spaces = "2dp"
+        barchart:bar_show_value="true"
+        barchart:bar_show_animation="true"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_height="250dp"/>
+    <TextView
+        android:textSize="20sp"
+        android:text="4. Total accidents in Delhi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+</ScrollView>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/predict"
         android:src="@drawable/predict_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="47dp"
         android:layout_marginEnd="57dp" />
-
-</RelativeLayout>
+    </RelativeLayout>

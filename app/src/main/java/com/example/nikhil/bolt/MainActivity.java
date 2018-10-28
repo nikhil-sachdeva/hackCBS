@@ -31,7 +31,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 2;
     PostFragment postFragment;
-    FloatingActionButton fab_stats;
+    FloatingActionButton fab_stats,fab;
     PagerAdapter pagerAdapter;
     ViewPager viewPager;
     BottomNavigationView navigation;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         }
         fab_stats=findViewById(R.id.fab_stats);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.rsz_b);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab_stats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,14 +80,22 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.bottom_danger:
+                        fab.setVisibility(View.INVISIBLE);
+                        fab_stats.setVisibility(View.INVISIBLE);
                         fragment = new DangerPredictionFragment();
                         loadFragment(fragment);
                         return true;
                     case R.id.bottom_post:
+                        if(fab.getVisibility()==View.INVISIBLE && fab_stats.getVisibility()==View.INVISIBLE){
+                            fab.setVisibility(View.VISIBLE);
+                            fab_stats.setVisibility(View.VISIBLE);
+                        }
                         fragment = new PostFragment();
                         loadFragment(fragment);
                         return true;
                     case R.id.bottom_driving:
+                        fab.setVisibility(View.INVISIBLE);
+                        fab_stats.setVisibility(View.INVISIBLE);
                         fragment=new DriverSettingsFragment();
                         loadFragment(fragment);
                         return true;    
