@@ -53,6 +53,7 @@ public class CreatePost extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     Post post = new Post();
     private static final int SELECT_PHOTO = 1;
+    private static final int AUTOCOMPLETE_LOCATION_ACTIVITY_REQUEST_CODE = 102;
     CustomEditText caption;
     DatabaseReference myRef;
     LinearLayout l1, l2;
@@ -113,12 +114,21 @@ public class CreatePost extends AppCompatActivity {
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                    post.setLocation(name);
 
                                 }
 
                             }
                         });
                                 }
+        });
+
+        l2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), PlaceAutocompleteActivity.class);
+                startActivityForResult(intent, AUTOCOMPLETE_LOCATION_ACTIVITY_REQUEST_CODE);
+            }
         });
         postit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +166,18 @@ public class CreatePost extends AppCompatActivity {
                 add.setImageBitmap(bm);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }
+        }
+        if (requestCode == AUTOCOMPLETE_LOCATION_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Bundle intentBundle = data.getBundleExtra("LOCATION_BUNDLE");
+                double lat = intentBundle.getDouble("LATITUDE");
+                double lang = intentBundle.getDouble("LONGITUDE");
+                String name = intentBundle.getString("NAME");
+                post.setLatitude(lat);
+                post.setLongitude(lang);
+                post.setLocation(name);
+
             }
         }
     }
