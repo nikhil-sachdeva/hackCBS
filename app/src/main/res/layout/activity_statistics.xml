@@ -1,9 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".StatisticsActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:barchart="http://schemas.android.com/apk/res-auto">
 
-</android.support.constraint.ConstraintLayout>
+    <me.ithebk.barchart.BarChart
+        android:id="@+id/bar_chart1"
+        barchart:bar_type="vertical"
+        barchart:bar_width="33dp"
+        barchart:bar_color="@color/colorPrimary"
+        barchart:bar_text_color="#808080"
+        barchart:bar_text_size="10sp"
+        barchart:bar_show_auto_color="false"
+        barchart:bar_max_value="100"
+        barchart:bar_spaces = "2dp"
+        barchart:bar_show_value="true"
+        barchart:bar_show_animation="true"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"/>
+
+    <me.ithebk.barchart.BarChart
+        android:id="@+id/bar_chart2"
+        barchart:bar_type="vertical"
+        barchart:bar_width="33dp"
+        barchart:bar_color="@color/colorPrimary"
+        barchart:bar_text_color="#808080"
+        barchart:bar_text_size="10sp"
+        barchart:bar_show_auto_color="false"
+        barchart:bar_max_value="100"
+        barchart:bar_spaces = "2dp"
+        barchart:bar_show_value="true"
+        barchart:bar_show_animation="true"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="300dp"
+        android:layout_height="250dp"/>
+
+    <me.ithebk.barchart.BarChart
+        android:id="@+id/bar_chart3"
+        barchart:bar_type="vertical"
+        barchart:bar_width="33dp"
+        barchart:bar_color="@color/colorPrimary"
+        barchart:bar_text_color="#808080"
+        barchart:bar_text_size="10sp"
+        barchart:bar_show_auto_color="false"
+        barchart:bar_max_value="100"
+        barchart:bar_spaces = "2dp"
+        barchart:bar_show_value="true"
+        barchart:bar_show_animation="true"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="300dp"
+        android:layout_height="250dp"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/predict"
+        android:src="@drawable/predict_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="47dp"
+        android:layout_marginEnd="57dp" />
+
+</RelativeLayout>

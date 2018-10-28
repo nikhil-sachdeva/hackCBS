@@ -44,7 +44,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="130dp"
         android:layout_marginEnd="34dp"
-        app:srcCompat="@drawable/stat_icon" />
+        app:srcCompat="@drawable/bar_graph" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
