@@ -51,13 +51,8 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.Holder>{
 
         holder.caption.setText(results.get(position).getCaption());
         Picasso.get().load(results.get(position).getImgURI()).into(holder.image_post);
-        Geocoder gcd = new Geocoder(context, Locale.getDefault());
-        try {
-            String loc = gcd.getFromLocation(results.get(position).getLatitude(),results.get(position).getLongitude(),1).get(0).getLocality();
-            holder.place.setText(loc);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String loc = results.get(position).getLocation();
+        holder.place.setText(loc);
 
     }
 
