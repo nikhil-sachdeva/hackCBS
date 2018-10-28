@@ -9,6 +9,7 @@ import java.util.Map;
 public class Post {
 
     String caption;
+    String location;
     double longitude,latitude;
     String imgURI;
 
@@ -42,6 +43,15 @@ public class Post {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
 
@@ -49,6 +59,7 @@ public class Post {
         result.put("longitude", longitude);
         result.put("caption", caption);
         result.put("imgURI",imgURI);
+        result.put("location",location);
 
         return result;
     }
