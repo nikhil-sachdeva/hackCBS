@@ -18,7 +18,11 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
+<<<<<<< HEAD
                                       <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_show_chart_black_24dp.xml" />
+=======
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_directions_car_black_24dp.xml" />
+>>>>>>> 5d990cd10c18091f3b882488485016396a81690e
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,9 +32,15 @@
                         </option>
                         <option name="values">
                           <map>
+<<<<<<< HEAD
                             <entry key="color" value="ffffff" />
                             <entry key="outputName" value="predict_icon" />
                             <entry key="sourceFile" value="$USER_HOME$" />
+=======
+                            <entry key="color" value="ff0600" />
+                            <entry key="outputName" value="dnd_off" />
+                            <entry key="sourceFile" value="C:\Users\Namrata Jha" />
+>>>>>>> 5d990cd10c18091f3b882488485016396a81690e
                           </map>
                         </option>
                       </PersistentState>
