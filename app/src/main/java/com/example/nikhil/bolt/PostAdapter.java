@@ -70,13 +70,27 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.Holder>{
         ImageView image_post;
 
         TextView place;
+        ImageView intentIcon;
 
         private Holder(View itemView) {
             super(itemView);
             caption=itemView.findViewById(R.id.caption);
             image_post=itemView.findViewById(R.id.image_post);
             place=itemView.findViewById(R.id.place);
+            intentIcon = itemView.findViewById(R.id.intent_icon);
 
+            intentIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String mapUri = "geo:"+results.get(getAdapterPosition()).getLatitude()+","+results.get(getAdapterPosition()).getLongitude();
+                    Uri gmmIntentUri = Uri.parse(mapUri);
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
+                        context.startActivity(mapIntent);
+                    }
+                }
+            });
 
         }
 
