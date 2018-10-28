@@ -53,6 +53,14 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.Holder>{
         Picasso.get().load(results.get(position).getImgURI()).into(holder.image_post);
         String loc = results.get(position).getLocation();
         holder.place.setText(loc);
+        holder.loc_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uri = String.format(Locale.ENGLISH, "geo:%f,%f", results.get(position).getLongitude(), results.get(position).getLongitude());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -68,7 +76,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.Holder>{
     class Holder extends RecyclerView.ViewHolder {
         TextView caption;
         ImageView image_post;
-
+        ImageView loc_image;
         TextView place;
 
         private Holder(View itemView) {
@@ -76,7 +84,7 @@ public class PostAdapter  extends RecyclerView.Adapter<PostAdapter.Holder>{
             caption=itemView.findViewById(R.id.caption);
             image_post=itemView.findViewById(R.id.image_post);
             place=itemView.findViewById(R.id.place);
-
+            loc_image=itemView.findViewById(R.id.loc_image);
 
         }
 

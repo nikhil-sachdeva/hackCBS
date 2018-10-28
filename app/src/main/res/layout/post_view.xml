@@ -30,13 +30,21 @@
 
     <TextView
         android:id="@+id/place"
-        android:layout_marginLeft="5dp"
-        android:textStyle="italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignStart="@+id/caption"
         android:layout_below="@+id/image_post"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/loc_image"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/place"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="12dp"
+        app:srcCompat="@drawable/ic_location" />
 
 
 </RelativeLayout>

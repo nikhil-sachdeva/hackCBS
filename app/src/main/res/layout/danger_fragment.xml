@@ -53,7 +53,8 @@
         android:id="@+id/recycler"
         android:layout_below="@id/locality_display"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp">
 
 
     </android.support.v7.widget.RecyclerView>
