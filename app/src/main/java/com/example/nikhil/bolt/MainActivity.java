@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
             }
         });
-
+        loadFragment(new PostFragment());
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
