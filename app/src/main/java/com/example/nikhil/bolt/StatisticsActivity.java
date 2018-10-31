@@ -31,6 +31,53 @@ FloatingActionButton predict;
         barChart4=findViewById(R.id.bar_chart4);
         barChart4.setBarMaxValue(9000);
         predict=findViewById(R.id.predict);
+
+        final BarChartModel barChartModel3=getModel(486112,"#452312","2010");
+        BarChartModel barChartModel4=getModel(512988,"#452312","2011");
+        BarChartModel barChartModel5=getModel(529712,"#452312","2012");
+        BarChartModel barChartModel6=getModel(531332,"#452312","2013");
+        BarChartModel barChartModel7=getModel(574602,"#452312","2014");
+        BarChartModel barChartModel8=getModel(430603,"#452312","2015");
+        BarChartModel barChartModel9=getModel(462255,"#452312","2016");
+        BarChartModel barChartModel10=getModel(463776,"#452312","2017");
+        barChartModel11=getModel(419688,"#123456","2018");
+        barChartModel12=getModel(396591,"#123456","2019");
+
+
+        final BarChartModel barChartModel1_2=getModel(2104,"#452312","2010");
+        BarChartModel barChartModel2_2=getModel(2104,"#452312","2011");
+        BarChartModel barChartModel3_2=getModel(1822,"#452312","2012");
+        BarChartModel barChartModel4_2=getModel(1778,"#452312","2013");
+        BarChartModel barChartModel5_2=getModel(1629,"#452312","2014");
+        BarChartModel barChartModel6_2=getModel(1582,"#452312","2015");
+        BarChartModel barChartModel7_2=getModel(1548,"#452312","2016");
+        BarChartModel barChartModel8_2=getModel(1500,"#452312","2017");
+        barChartModel9_2=getModel(1682,"#123456","2018");
+        barChartModel10_2=getModel(1951,"#123456","2018");
+
+        final BarChartModel barChartModel1_3=getModel(2153,"#452312","2010");
+        BarChartModel barChartModel2_3=getModel(2110,"#452312","2011");
+        BarChartModel barChartModel3_3=getModel(1866,"#452312","2012");
+        BarChartModel barChartModel4_3=getModel(1820,"#452312","2013");
+        BarChartModel barChartModel5_3=getModel(1671,"#452312","2014");
+        BarChartModel barChartModel6_3=getModel(1622,"#452312","2015");
+        BarChartModel barChartModel7_3=getModel(1591,"#452312","2016");
+        BarChartModel barChartModel8_3=getModel(1584,"#452312","2017");
+        barChartModel9_3=getModel(1789,"#123456","2018");
+        barChartModel10_3=getModel(2101,"#123456","2018");
+
+
+        final BarChartModel barChartModel1_4=getModel(7260,"#452312","2010");
+        BarChartModel barChartModel2_4=getModel(7280,"#452312","2011");
+        BarChartModel barChartModel3_4=getModel(6937,"#452312","2012");
+        BarChartModel barChartModel4_4=getModel(7566,"#452312","2013");
+        BarChartModel barChartModel5_4=getModel(8623,"#452312","2014");
+        BarChartModel barChartModel6_4=getModel(8085,"#452312","2015");
+        BarChartModel barChartModel7_4=getModel(7375,"#452312","2016");
+        BarChartModel barChartModel8_4=getModel(6673,"#452312","2017");
+        barChartModel9_4=getModel(4741,"#123456","2018");
+        barChartModel10_4=getModel(1925,"#123456","2018");
+
         final BarChartModel barChartModel3=getModel(486112,"#FFA726","2010");
         BarChartModel barChartModel4=getModel(512988,"#FFA726","2011");
         BarChartModel barChartModel5=getModel(529712,"#FFA726","2012");
@@ -76,6 +123,7 @@ FloatingActionButton predict;
         BarChartModel barChartModel8_4=getModel(6673,"#FFA726","2017");
         barChartModel9_4=getModel(4741,"#E65100","2018");
         barChartModel10_4=getModel(1925,"#E65100","2019");
+
 
 
 

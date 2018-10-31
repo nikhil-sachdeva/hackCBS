@@ -4,19 +4,43 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <TextView
         android:id="@+id/index"
-        android:textSize="100sp"
-        android:layout_marginTop="25dp"
+        android:textSize="70sp"
+        android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="9.2"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/index"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/location_buttons">
+
+        <ImageView
+            android:id="@+id/current_location"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/location_current"/>
+
+        <ImageView
+            android:id="@+id/autocomplete_location"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="75dp"
+            android:src="@drawable/location"/>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/locality_display"
-        android:layout_below="@id/index"
+        android:layout_below="@id/location_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -54,7 +78,10 @@
         android:layout_below="@id/locality_display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp">
+
+        android:layout_marginBottom="50dp">
+
+
 
 
     </android.support.v7.widget.RecyclerView>
